@@ -1,0 +1,2 @@
+ui - React, TypeScript, Tailwind, Vite
+A single User Interface for the Food Delivery App.

@@ -1,0 +1,7 @@
+API - Java, Spring Boot, Spring Security, Spring JPA, MySQL, Swagger
+Microservices 
+Works on the business layer
+
+user - User Service - Takes care of the user details (registration, login, token generation)
+restaurant - Restaurant Service - Takes care of the restaurant details (restaurants, menus)
+
