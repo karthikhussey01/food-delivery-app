@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
+import { Button, Card, Typography } from 'antd';
 import InputField from '../components/InputField';
+import { login } from '../services/AuthService';
+
+const { Title, Text } = Typography;
 
 const AuthPage: React.FC = () => {
-  // State to manage form data
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -11,10 +14,8 @@ const AuthPage: React.FC = () => {
     lastname: '',
   });
 
-  // State to toggle between login and registration
   const [isRegistering, setIsRegistering] = useState(false);
 
-  // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -23,29 +24,31 @@ const AuthPage: React.FC = () => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isRegistering) {
       console.log('Registration form submitted:', formData);
-      // You can add API call for registration here
     } else {
       console.log('Login form submitted:', formData);
-      // You can add API call for login here
+      login(formData.username, formData.password);
     }
   };
 
-  // Toggle between Login and Register form
   const toggleForm = () => {
     setIsRegistering((prev) => !prev);
   };
 
   return (
     <div className='flex justify-center items-center min-h-screen bg-gray-50'>
-      <div className='w-full max-w-sm p-6 bg-white rounded-lg shadow-md'>
-        <h2 className='text-2xl font-semibold text-center text-gray-700 mb-6'>
+      <Card
+        className='w-full max-w-sm'
+        style={{ padding: '20px', borderRadius: '8px' }}
+        title={null}
+        bordered={false}
+      >
+        <Title level={2} className='text-center text-gray-700 mb-6'>
           {isRegistering ? 'Create an Account' : 'Login to Your Account'}
-        </h2>
+        </Title>
 
         <form onSubmit={handleSubmit}>
           <InputField
@@ -97,40 +100,37 @@ const AuthPage: React.FC = () => {
             </>
           )}
 
-          <button
-            type='submit'
-            className='w-full py-2 mt-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700'
+          <Button
+            type='primary'
+            htmlType='submit'
+            className='w-full mt-4'
+            size='large'
+            style={{ backgroundColor: '#4c6ef5', borderColor: '#4c6ef5' }}
           >
             {isRegistering ? 'Register' : 'Login'}
-          </button>
+          </Button>
         </form>
 
         <div className='mt-4 text-center'>
-          <p className='text-sm'>
+          <Text className='text-sm'>
             {isRegistering ? (
               <>
                 Already have an account?{' '}
-                <button
-                  onClick={toggleForm}
-                  className='text-indigo-600 hover:underline'
-                >
+                <Button type='link' onClick={toggleForm} style={{ padding: 0 }}>
                   Login here
-                </button>
+                </Button>
               </>
             ) : (
               <>
                 Don't have an account?{' '}
-                <button
-                  onClick={toggleForm}
-                  className='text-indigo-600 hover:underline'
-                >
+                <Button type='link' onClick={toggleForm} style={{ padding: 0 }}>
                   Register here
-                </button>
+                </Button>
               </>
             )}
-          </p>
+          </Text>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };
